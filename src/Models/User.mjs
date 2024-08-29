@@ -44,6 +44,11 @@ export default (db, types) => {
             type: types.BOOLEAN,
             defaultValue: false
         }
+        ,
+        progression:{
+            type: types.INTEGER,
+            defaultValue: 0
+        }
     }, {
         timestamps: true,
         createdAt: true,

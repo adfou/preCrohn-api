@@ -8,8 +8,8 @@ import formModel from './form.mjs';
 
 const User = userModel(DB, Sequelize); // Ensure you're using Sequelize.DataTypes
 const From = formModel(DB, Sequelize);
-console.error("waa hlima")
-DB.sync()
+
+DB.sync() //{ alter: true }
     .then(() => {
         console.log('Tables are updated without being deleted.');
     })

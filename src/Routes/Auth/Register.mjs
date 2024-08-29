@@ -3,7 +3,7 @@ import { User } from '../../Models/index.mjs'; // Adjust to your User model path
 import { Op } from 'sequelize'; // Import Op from Sequelize
 
 const registerUser = async (req, res) => {
-    console.log("register")
+ 
     const { firstName, secondName, username, email, password, role } = req.body;
 
     try {
