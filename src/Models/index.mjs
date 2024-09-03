@@ -7,7 +7,7 @@ import userModel from './User.mjs';
 import formModel from './form.mjs';
 
 const User = userModel(DB, Sequelize); // Ensure you're using Sequelize.DataTypes
-const From = formModel(DB, Sequelize);
+const Form = formModel(DB, Sequelize);
 
 DB.sync({ alter: true }) //
     .then(() => {
@@ -19,5 +19,5 @@ DB.sync({ alter: true }) //
 
 export {
     User,
-    From
+    Form,
 };

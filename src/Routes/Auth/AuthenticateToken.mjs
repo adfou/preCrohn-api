@@ -2,10 +2,10 @@ import jwt from 'jsonwebtoken';
 import { User } from '../../Models/index.mjs'; // Adjust to your User model path
 
 const authenticateToken = async (req, res, next) => {
-    console.log("Authenticating token...");
+    
 
     const token = req.headers['authorization'];
-    console.log("Token received:", token);
+   
 
     if (!token) {
         return res.status(401).json({ message: 'No token provided' });
@@ -26,7 +26,7 @@ const authenticateToken = async (req, res, next) => {
         return res.status(200).json({ message: 'Token is valid', user: { id: user.id, email: user.email, role: user.role } });
     } catch (error) {
         console.error("Token verification failed:", error);
-        return res.status(401).json({ message: 'Invalid token' });
+        return res.status(401).json({ message: 'Your session has expired. Please log in again.' });
     }
 };
 
