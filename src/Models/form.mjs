@@ -26,9 +26,14 @@ export default (db, types) => {
                 '1', // Your medical history
                 '2', // Your family history
                 '3', // Your diet
-                '4', // Your physical activity
-                '5', // Your smoking history
-                '6'  // CROHN’S DISEASE: KNOWLEDGE AND ATTITUDES SURVEY
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9', // Your physical activity
+                '10', // Your smoking history
+                '11'  // CROHN’S DISEASE: KNOWLEDGE AND ATTITUDES SURVEY
             ],
             allowNull: false
         }

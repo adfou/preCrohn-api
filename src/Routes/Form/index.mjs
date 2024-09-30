@@ -4,6 +4,6 @@ import authenticateJWT from '../../Middlewares/AuthMiddleware.mjs';
 
 const router = Router();
 
-router.get('/form',authenticateJWT,CreateUserFormData);
+router.post('/form',authenticateJWT,CreateUserFormData);
 
 export default router;
