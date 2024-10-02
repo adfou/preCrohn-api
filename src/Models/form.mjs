@@ -19,6 +19,7 @@ export default (db, types) => {
             type: types.JSON,
             allowNull: false
         },
+        /*
         form_type: {
             type: types.ENUM,
             values: [
@@ -32,11 +33,12 @@ export default (db, types) => {
                 '7',
                 '8',
                 '9', // Your physical activity
-                '10', // Your smoking history
+                '10', // Your smoking history   
                 '11'  // CROHN’S DISEASE: KNOWLEDGE AND ATTITUDES SURVEY
             ],
             allowNull: false
         }
+            */
     }, {
         timestamps: true,
         createdAt: true,

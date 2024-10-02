@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User } from '../../Models/index.mjs'; // Adjust to your User model path
+import { User, Form } from '../../Models/index.mjs'; // Adjust to your User and Form model paths
 
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
@@ -18,14 +18,17 @@ const loginUser = async (req, res) => {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
 
+        // Find the form data for this user (assuming form is related to the user)
+        const form = await Form.findOne({ where: { user_id: user.id } });
+
         // Generate JWT token
         const token = jwt.sign(
             { id: user.id, email: user.email, role: user.role },
             process.env.JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '5h' }
         );
 
-        // Return the token along with user information
+        // Return the token, user information, and form data (if exists)
         res.status(200).json({
             message: 'Login successful',
             token,
@@ -34,6 +37,7 @@ const loginUser = async (req, res) => {
                 email: user.email,
                 role: user.role,
             },
+            form: form ? form.form_data : {}, // Return form data if it exists, else null
         });
     } catch (error) {
         console.error('Login error:', error); // Log the error for debugging
