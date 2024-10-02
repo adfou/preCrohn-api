@@ -22,7 +22,7 @@ const httpServer = createServer(app);
 const whitelist = [
     'http://localhost:3000',    
     'http://localhost:3001',
-    'https://precrohn-production.up.railway.app'
+    'https://precrohn-production.up.railway.app'  
 ];
 
 const corsOptionsDelegate = (req, callback) => {
@@ -31,9 +31,10 @@ const corsOptionsDelegate = (req, callback) => {
         const corsOptions = { origin, credentials: true }; // Allow this origin
         callback(null, corsOptions);
     } else {
-        callback(new Error('Not allowed by CORS')); // Block this origin
+        callback(new Error('Not allowed by CORS')); // Block other origins
     }
 };
+
 
 
 // Middleware setup
