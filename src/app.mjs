@@ -26,11 +26,15 @@ const whitelist = [
 ];
 
 const corsOptionsDelegate = (req, callback) => {
-    const corsOptions = whitelist.includes(req.header('Origin'))
-        ? { origin: req.header('Origin'), credentials: true }
-        : { origin: false, credentials: false };
-    callback(null, corsOptions);
+    const origin = req.header('Origin');
+    if (whitelist.includes(origin)) {
+        const corsOptions = { origin, credentials: true }; // Allow this origin
+        callback(null, corsOptions);
+    } else {
+        callback(new Error('Not allowed by CORS')); // Block this origin
+    }
 };
+
 
 // Middleware setup
 app.use(cors(corsOptionsDelegate)); // CORS configuration
