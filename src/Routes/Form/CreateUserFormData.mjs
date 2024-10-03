@@ -1,7 +1,7 @@
 import { Form } from '../../Models/index.mjs'; // Adjust the path as needed
 
 export const CreateUserFormData = async (req, res) => {
-    const { form_data, form_type } = req.body; // Destructure form_type from the request body
+    const { form_data } = req.body; // Destructure form_type from the request body
 
    
 
@@ -11,16 +11,14 @@ export const CreateUserFormData = async (req, res) => {
 
         console.log("========================");
         console.log(user_id);
-        console.log("========================");
-        console.log(req.body);
-        console.log("========================");
+    
 
         const existingForm = await Form.findOne({
             where: {
                 user_id,
             }
-        });
-
+        }); 
+     
         if (existingForm) {
             // If the form exists, update the form_data
             await existingForm.update({ form_data });

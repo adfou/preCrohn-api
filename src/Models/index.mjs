@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import DB from "../Config/DBContact.mjs"
 
-console.log(DB instanceof Sequelize)
+
 
 import userModel from './User.mjs';
 import formModel from './form.mjs';
