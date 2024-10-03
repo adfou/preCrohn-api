@@ -3,12 +3,13 @@ import { Form } from '../../Models/index.mjs'; // Adjust the path as needed
 export const CreateUserFormData = async (req, res) => {
     const { form_data } = req.body;
 
-
+    
         // Assuming the user_id is retrieved from the authenticated user (from token or session)
         const user_id = req.user.id;
 
-        
-        
+        console.log("========================")
+        console.log(user_id)
+        console.log("========================")
         // Check if a form with the same user_id and form_type already exists
         const existingForm = await Form.findOne({
             where: {

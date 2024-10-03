@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import { CreateUserFormData } from "./CreateUserFormData.mjs"
-import {GetUserFormData} from "./GetUserFormData.mjs";
+import { CreateUserFormData } from "./CreateUserFormData.mjs"// Adjust as needed
 import authenticateJWT from '../../Middlewares/AuthMiddleware.mjs';
 
 const router = Router();
