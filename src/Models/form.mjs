@@ -17,7 +17,6 @@ export default (db, types) => {
         },
         form_data: {
             type: types.JSON,
-            allowNull: true,
         
         },
         form_type: {
@@ -25,7 +24,7 @@ export default (db, types) => {
             values: [
                 '0', // General information
                 '1', // Your medical history
-                '2', // Your family history
+                '2', // Your family history)
                 '3', // Your diet
                 '4',
                 '5',
@@ -36,7 +35,6 @@ export default (db, types) => {
                 '10', // Your smoking history   
                 '11'  // CROHN’S DISEASE: KNOWLEDGE AND ATTITUDES SURVEY
             ],
-            allowNull: false,
             default:"0"
         }
     }, {
