@@ -10,6 +10,8 @@ export const CreateUserFormData = async (req, res) => {
         console.log("========================")
         console.log(user_id)
         console.log("========================")
+        console.log(form_data)
+        console.log("========================")
         // Check if a form with the same user_id and form_type already exists
         const existingForm = await Form.findOne({
             where: {

@@ -17,7 +17,8 @@ export default (db, types) => {
         },
         form_data: {
             type: types.JSON,
-            allowNull: false
+            allowNull: true,
+        
         },
         form_type: {
             type: types.ENUM,
