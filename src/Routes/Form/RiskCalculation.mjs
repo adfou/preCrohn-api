@@ -28,7 +28,7 @@ export const RiskCalculation = async (req, res) => {
             // If the form exists, return the form data
             //console.log(form.form_data)
             console.log("form.form_data:",form.form_data)
-            const dataObj = JSON.parse(form.form_data);
+            const dataObj = form.form_data //JSON.parse(form.form_data);
             //console.log(dataObj["general-information"])
             const AcitvityCalcul = AcitvityCalculation(dataObj?.["your-physical-activity"])
             const SugarCalcul = SugareCalculation(dataObj)
