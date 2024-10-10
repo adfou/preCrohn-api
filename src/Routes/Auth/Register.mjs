@@ -4,7 +4,8 @@ import { Op } from 'sequelize'; // Import Op from Sequelize
 
 const registerUser = async (req, res) => {
  
-    const { firstName, secondName, username, email, password, role } = req.body;
+    const { firstName, secondName, username, email, password, role,biomarkers } = req.body;
+    console.log(req.body)
 
     try {
         // Check if user already exists by email or username
@@ -27,7 +28,8 @@ const registerUser = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            role: role || '3' // Default role
+            role: role || '3', // Default role
+            biomarkers:biomarkers
         });
 
         res.status(201).json({ message: 'User registered successfully', user: newUser });

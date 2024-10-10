@@ -6,35 +6,35 @@ export default (db, types) => {
             allowNull: false,
             primaryKey: true
         },
-        firstName: {  // Add the first name field
-            type: types.STRING(50),  // Adjust the length as necessary
+        firstName: {  
+            type: types.STRING(50),  // Adjust length as needed
             allowNull: false
         },
-        secondName: {  // Add the second name field
-            type: types.STRING(50),  // Adjust the length as necessary
+        secondName: {  
+            type: types.STRING(50),  
             allowNull: false
         },
-        username: {  // Add the username field
-            type: types.STRING(50),  // Adjust the length as necessary
+        username: {  
+            type: types.STRING(50),  
             allowNull: false,
-            unique: true  // Ensure usernames are unique
+           
         },
         email: {
             type: types.STRING(100),
             allowNull: false,
-            validate: { isEmail: true }
+            unique: true,  // Email should be unique as well
+            validate: { 
+                isEmail: true 
+            }
         },
         password: {
             type: types.STRING(255),
             allowNull: false
         },
         role: {
-            type: types.ENUM,
-            values: ['1', '2', '3'],
+            type: types.ENUM(['1', '2', '3']),  // ENUM expects an array of values
             defaultValue: '3',
-            // 1 -> admin
-            // 2 -> user Group 1
-            // 3 -> user Group 2
+            comment: "1 -> admin, 2 -> user Group 1, 3 -> user Group 2"
         },
         activation: {
             type: types.BOOLEAN,
@@ -43,17 +43,18 @@ export default (db, types) => {
         email_verify: {
             type: types.BOOLEAN,
             defaultValue: false
-        }
-        ,
-        progression:{
+        },
+        progression: {
             type: types.INTEGER,
             defaultValue: 0
+        },
+        biomarkers: {
+            type: types.ENUM(['no', 'yes']),  // ENUM expects an array
+            defaultValue: "no"
         }
     }, {
-        timestamps: true,
-        createdAt: true,
-        updatedAt: true,
-        deletedAt: true,
-        paranoid: true
+        timestamps: true,  // Automatically adds createdAt and updatedAt
+        paranoid: true,     // Enables soft deletes (deletedAt)
+        underscored: true,  // Converts camelCase column names to snake_case in the database
     });
 };
