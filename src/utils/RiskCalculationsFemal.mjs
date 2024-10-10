@@ -130,18 +130,32 @@ export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,S
     const Age = data["general-information"]["How old are you?"]
     const FamilyHistory = data['family-history']
     let result =0
+    let testData ={}
     //antibiotic
     result += AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"])
-    result += FiberFemale(FiberCalculation)
-    result += PhysicalactivityFemale(activityCalculation)
-    result += FruitFemale(FruitCalculation)
-    result += SugarFemale(SugarCalculation)
-    result += NSAIDsValueFemal[MedicalHistory['How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?']]
-    result += PetsAtHome(MedicalHistory['When you were a child or young adult, did you have pets in your home? '])
-    result += BreastFeeed(MedicalHistory['Were you breast-fed when you were a baby?'])
-    result += DoYouSmokeCigarettesFemal[SmokingHistory['Do you smoke cigarettes?']]
-    result += Biomarkers(biomarkers)
-    result += BirthControlPill[MedicalHistory["Have you ever taken birth control pills?"]]
+    
+    result *= FiberFemale(FiberCalculation)
+    result *= PhysicalactivityFemale(activityCalculation)
+    result *= FruitFemale(FruitCalculation)
+    result *= SugarFemale(SugarCalculation)
+    result *= NSAIDsValueFemal[MedicalHistory['How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?']]
+    result *= PetsAtHome(MedicalHistory['When you were a child or young adult, did you have pets in your home? '])
+    result *= BreastFeeed(MedicalHistory['Were you breast-fed when you were a baby?'])
+    result *= DoYouSmokeCigarettesFemal[SmokingHistory['Do you smoke cigarettes?']]
+    result *= Biomarkers(biomarkers)
+    result *= BirthControlPill[MedicalHistory["Have you ever taken birth control pills?"]]
+    testData={
+        AntibioticCalculation:MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"],
+        FiberFemale:FiberCalculation,
+        FruitFemale:FruitFemale(FruitCalculation),
+        SugarFemale:SugarFemale(SugarCalculation),
+        NSAIDsValueFemal:MedicalHistory['How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?'],
+        PetsAtHome:MedicalHistory['When you were a child or young adult, did you have pets in your home? '],
+        BreastFeeed:MedicalHistory['Were you breast-fed when you were a baby?'],
+        DoYouSmokeCigarettesFemal:SmokingHistory['Do you smoke cigarettes?'],
+        Biomarkers:biomarkers,
+        BirthControlPill:MedicalHistory["Have you ever taken birth control pills?"]
+    }
  /*
     console.log("=========================")
     console.log("antibiotic",AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"]))
@@ -178,7 +192,6 @@ export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,S
         RR:setpOne,
         StepTwo:StepTwo,
         TestCase:result,
-
         SugarCalculation:SugarFemale(SugarCalculation),
         Fruit:FruitFemale(FruitCalculation),
         Physicalactivity:PhysicalactivityFemale(activityCalculation),
@@ -190,7 +203,8 @@ export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,S
         PetsAtHome:PetsAtHome(MedicalHistory['When you were a child or young adult, did you have pets in your home? ']),
         NSAIDsValueFemal:NSAIDsValueFemal[MedicalHistory['How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?']],
         AntibioticCalculation:AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"]),
-        CategorizeRisk:categorizeRisk(setpOne)
+        CategorizeRisk:categorizeRisk(setpOne),
+        testData:testData
     }
 
     return FinalResult
