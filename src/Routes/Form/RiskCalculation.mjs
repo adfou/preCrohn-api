@@ -28,7 +28,16 @@ export const RiskCalculation = async (req, res) => {
             // If the form exists, return the form data
             //console.log(form.form_data)
             console.log("form.form_data:",form.form_data)
-            const dataObj = form.form_data //JSON.parse(form.form_data);
+            let dataObj;
+            if (typeof form.form_data === 'string') {
+                dataObj = JSON.parse(form.form_data);
+            } else if (typeof form.form_data === 'object') {
+                dataObj = form.form_data; // If it's already an object, use it directly
+            } else {
+                console.error("Invalid form_data:", form.form_data);
+                return; // Exit if form_data is neither a string nor an object
+            }
+
             //console.log(dataObj["general-information"])
             const AcitvityCalcul = AcitvityCalculation(dataObj?.["your-physical-activity"])
             const SugarCalcul = SugareCalculation(dataObj)
