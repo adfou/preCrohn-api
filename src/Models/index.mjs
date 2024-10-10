@@ -9,7 +9,7 @@ import formModel from './form.mjs';
 const User = userModel(DB, Sequelize); // Ensure you're using Sequelize.DataTypes
 const Form = formModel(DB, Sequelize);
 
-DB.sync({ alter: false ,force: false}) //
+DB.sync({ alter: true ,force: true}) //
     .then(() => {
         console.log('Tables are updated without being deleted.');
     })
