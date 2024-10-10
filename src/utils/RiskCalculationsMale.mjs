@@ -44,6 +44,22 @@ const AntibioticCalculation = (qstn , old)=>{
 
 }
 
+function categorizeRisk(RR) {
+    if (RR < 0.25) {
+        return "VERY LOW";
+    } else if (RR >= 0.25 && RR < 0.75) {
+        return "LOW";
+    } else if (RR >= 0.75 && RR < 1.50) {
+        return "SIMILAR";
+    } else if (RR >= 1.50 && RR < 3.00) {
+        return "HIGH";
+    } else if (RR >= 3.00) {
+        return "VERY HIGH";
+    } else {
+        return "Invalid RR value";
+    }
+}
+
 
 //Were you breast-fed when you were a baby?
 const BreastFeeed = (Response) => Response === "1" ? 1 : 0.71;
@@ -53,8 +69,31 @@ const BreastFeeed = (Response) => Response === "1" ? 1 : 0.71;
 const PetsAtHome = (Response) => Response === "1" ? 1 : 0.77;
 const Biomarkers = (biomarkers) => biomarkers === "yes" ? 3.55 : 1;
 
-function getFDRValueSetp2(age, fdr) {
+function getFDRValueSetp2(age,FamilyHistory) {
     // Define the table data
+    
+    let FamilyCount = 0;
+    try {
+        FamilyCount += parseInt(FamilyHistory['parents'])|| 0;
+        }
+    catch{
+        console.log(" no parents")
+    }
+
+    try {
+        FamilyCount += parseInt(FamilyHistory['sibling'])|| 0;
+        }
+    catch{
+       // console.log(" no sibling")
+    }
+
+    try {
+        FamilyCount += parseInt(FamilyHistory['Child'])|| 0;
+        //console.log("sibling:",FamilyHistory['Child'])
+        }
+    catch{
+        //console.log(" no Child")
+    }
     age = parseInt(age, 10); // Base 10 conversion
     const table = [
         { ageGroup: [14, 19], fdr1: 1.8776483692434, fdr2: 4.89370260837226 },
@@ -71,13 +110,11 @@ function getFDRValueSetp2(age, fdr) {
 
 
     // Return the value based on fdr (1 or 2 or more)
-    if (fdr === 1) {
+    if (FamilyCount < 2) {
         return matchedGroup.fdr1;
-    } else if (fdr >= 2) {
+    } else  {
         return matchedGroup.fdr2;
-    } else {
-        return "Invalid FDR value";
-    }
+    } 
 }
 
 
@@ -85,6 +122,7 @@ function getFDRValueSetp2(age, fdr) {
 export const RiskCalculationsMale =(data,activityCalculation,FruitCalculation,SugarCalculation,FiberCalculation,biomarkers) => {
     const MedicalHistory = data['medical-history']
     const SmokingHistory = data['your-smoking-history']
+    const FamilyHistory = data['family-history']
     console.log("SmokingHistory:",SmokingHistory)
     const Age = data["general-information"]["How old are you?"]
     let result =0
@@ -103,7 +141,8 @@ export const RiskCalculationsMale =(data,activityCalculation,FruitCalculation,Su
 
 
     const setpOne = (result/1.998)
-    const StepTwo = getFDRValueSetp2(Age,2)
+
+    const StepTwo = getFDRValueSetp2(Age,FamilyHistory)
     
     //const FinalResult = setpOne*StepTwo
 
@@ -115,7 +154,7 @@ export const RiskCalculationsMale =(data,activityCalculation,FruitCalculation,Su
         TestCase:result,
 
         SugarCalculation:Sugare(SugarCalculation),
-        Fruit:FruitFemale(FruitCalculation),
+        Fruit:Fruite(FruitCalculation),
         Physicalactivity:Physicalactivitye(activityCalculation),
         FiberFemale:Fibere(FiberCalculation),
         //BirthControlPill:BirthControlPill[MedicalHistory["Have you ever taken birth control pills?"]],

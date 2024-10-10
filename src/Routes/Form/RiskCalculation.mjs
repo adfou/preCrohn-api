@@ -1,5 +1,5 @@
 import { Form, User} from '../../Models/index.mjs'; // Adjust the path as needed
-import {SugareCalculation ,fruitCalculation ,AcitvityCalculation ,FiberCalculation ,RiskCalculationsFemal} from "../../utils/index.mjs"
+import {SugareCalculation ,fruitCalculation ,AcitvityCalculation ,FiberCalculation ,RiskCalculationsFemal, RiskCalculationsMale} from "../../utils/index.mjs"
 import {Servings_per_Day} from "../../data/data.mjs"
 // Controller function to get form data by user_id
 export const RiskCalculation = async (req, res) => {
@@ -11,9 +11,7 @@ export const RiskCalculation = async (req, res) => {
       
         const user_id = req.user.id;
 
-        console.log("========================");
-        console.log("user_id", user_id);
-        console.log("========================");
+      
         const user = req.user
         //here i wanna get the user biomarkers field and log it to chatgpt
         
@@ -29,8 +27,10 @@ export const RiskCalculation = async (req, res) => {
             //console.log(form.form_data)
             let dataObj;
             if (typeof form.form_data === 'string') {
+                console.log("string")
                 dataObj = JSON.parse(form.form_data);
             } else if (typeof form.form_data === 'object') {
+                console.log("object")
                 dataObj = form.form_data; // If it's already an object, use it directly
             } else {
                 console.error("Invalid form_data:", form.form_data);
@@ -42,14 +42,26 @@ export const RiskCalculation = async (req, res) => {
             const SugarCalcul = SugareCalculation(dataObj)
             const FruitCalcul = fruitCalculation(dataObj['your-diet-2'],Servings_per_Day)
             const FiberCalcul = FiberCalculation(dataObj)
-            console.log("===============")
-            console.log("AcitvityCalcul",AcitvityCalcul)
-            console.log("SugarCalcul",SugarCalcul)
-            console.log("FruitCalcul",FruitCalcul)
-            console.log("FiberCalcul",FiberCalcul)
-            console.log("bio :",user.biomarkers)
-            console.log("===============")
-            const Result = RiskCalculationsFemal(dataObj,AcitvityCalcul,FruitCalcul,SugarCalcul,FiberCalcul,user.biomarkers)
+            const Gender = dataObj["general-information"]['What is your sex assigned at birth?']
+            //console.log("===============")
+            //console.log("AcitvityCalcul",AcitvityCalcul)
+            //console.log("SugarCalcul",SugarCalcul)
+            //console.log("FruitCalcul",FruitCalcul)
+            //console.log("FiberCalcul",FiberCalcul)
+            //console.log("bio :",user.biomarkers)
+            //console.log("user:",user)
+            //console.log("===============")
+            let Result = {}
+            if(Gender ==="0"){
+                console.log("================ male ================")
+                //male
+                Result = RiskCalculationsMale(dataObj,AcitvityCalcul,FruitCalcul,SugarCalcul,FiberCalcul,user.biomarkers)
+
+            }
+            else{
+                console.log("================ femal ================")
+            Result = RiskCalculationsFemal(dataObj,AcitvityCalcul,FruitCalcul,SugarCalcul,FiberCalcul,user.biomarkers)
+        }
             
             console.log("RiskClacul:",Result)
             return res.status(200).json(Result);

@@ -23,7 +23,7 @@ const authenticateToken = async (req, res, next) => {
         req.user = user;
         //console.log("User authenticated:", user);
 
-        return res.status(200).json({ message: 'Token is valid', user: { id: user.id, email: user.email, role: user.role,biomarkers:user.biomarkers } });
+        return res.status(200).json({ message: 'Token is valid', user: { id: user.id, email: user.email, role: user.role, biomarkers:user.biomarkers } });
     } catch (error) {
         console.error("Token verification failed:", error);
         return res.status(401).json({ message: 'Your session has expired. Please log in again.' });

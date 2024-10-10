@@ -57,7 +57,32 @@ const BreastFeeed = (Response) => Response === "1" ? 1 : 0.71;
 const PetsAtHome = (Response) => Response === "1" ? 1 : 0.77;
 const Biomarkers = (biomarkers) => biomarkers === "yes" ? 3.55 : 1;
 
-function getFDRValueSetp2(age, fdr) {
+function getFDRValueSetp2(age,FamilyHistory) {
+    let FamilyCount = 0;
+    try {
+        FamilyCount += parseInt(FamilyHistory['parents']) || 0;
+        console.log("parents:",FamilyHistory['parents'])
+        }
+    catch{
+        console.log(" no parents")
+    }
+
+    try {
+        FamilyCount += parseInt(FamilyHistory['sibling']) || 0;
+        console.log("sibling:",FamilyHistory['sibling'])
+        }
+    catch{
+        console.log(" no sibling")
+    }
+
+    try {
+        FamilyCount += parseInt(FamilyHistory['Child']) || 0;
+        //console.log("sibling:",FamilyHistory['Child'])
+        }
+    catch{
+        console.log(" no Child")
+    }
+    console.log("FamilyCount:",FamilyCount)
     // Define the table data
     age = parseInt(age, 10); // Base 10 conversion
     const table = [
@@ -75,13 +100,12 @@ function getFDRValueSetp2(age, fdr) {
 
 
     // Return the value based on fdr (1 or 2 or more)
-    if (fdr === 1) {
+    if (FamilyCount < 2) {
         return matchedGroup.fdr1;
-    } else if (fdr >= 2) {
+    } else  {
         return matchedGroup.fdr2;
-    } else {
-        return "Invalid FDR value";
-    }
+    } 
+
 }
 
 function categorizeRisk(RR) {
@@ -104,6 +128,7 @@ export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,S
     const MedicalHistory = data['medical-history']
     const SmokingHistory = data['your-smoking-history']
     const Age = data["general-information"]["How old are you?"]
+    const FamilyHistory = data['family-history']
     let result =0
     //antibiotic
     result += AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"])
@@ -146,7 +171,7 @@ export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,S
     console.log("FinalResult",FinalResult)
     console.log("========================")*/
     const setpOne = (result/2.375)
-    const StepTwo = getFDRValueSetp2(Age,1)
+    const StepTwo = getFDRValueSetp2(Age,FamilyHistory)
     const FinalResult = {
         FinalResult:setpOne*StepTwo,
         FinalRsultRound:Math.round(setpOne*StepTwo),
