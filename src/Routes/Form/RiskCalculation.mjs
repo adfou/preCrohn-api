@@ -12,7 +12,11 @@ export const RiskCalculation = async (req, res) => {
         const user_id = req.user.id;
 
       
-        const user = req.user
+        const user = await User.findOne({
+            where: {
+                id:user_id
+            }
+        });
         //here i wanna get the user biomarkers field and log it to chatgpt
         
         // Find the form by user_id
@@ -43,14 +47,14 @@ export const RiskCalculation = async (req, res) => {
             const FruitCalcul = fruitCalculation(dataObj['your-diet-2'],Servings_per_Day)
             const FiberCalcul = FiberCalculation(dataObj)
             const Gender = dataObj["general-information"]['What is your sex assigned at birth?']
-            //console.log("===============")
-            //console.log("AcitvityCalcul",AcitvityCalcul)
-            //console.log("SugarCalcul",SugarCalcul)
-            //console.log("FruitCalcul",FruitCalcul)
-            //console.log("FiberCalcul",FiberCalcul)
-            //console.log("bio :",user.biomarkers)
+            console.log("===============")
+            console.log("AcitvityCalcul",AcitvityCalcul)
+            console.log("SugarCalcul",SugarCalcul)
+            console.log("FruitCalcul",FruitCalcul)
+            console.log("FiberCalcul",FiberCalcul)
+            console.log("bio :",user.biomarkers)
             //console.log("user:",user)
-            //console.log("===============")
+            console.log("===============")
             let Result = {}
             if(Gender ==="0"){
                 console.log("================ male ================")
@@ -63,7 +67,7 @@ export const RiskCalculation = async (req, res) => {
             Result = RiskCalculationsFemal(dataObj,AcitvityCalcul,FruitCalcul,SugarCalcul,FiberCalcul,user.biomarkers)
         }
             
-            console.log("RiskClacul:",Result)
+            //console.log("RiskClacul:",Result)
             return res.status(200).json(Result);
         } else {
             // If no form exists for this user, return a 404 response
