@@ -85,6 +85,7 @@ function getFDRValueSetp2(age, fdr) {
 export const RiskCalculationsMale =(data,activityCalculation,FruitCalculation,SugarCalculation,FiberCalculation,biomarkers) => {
     const MedicalHistory = data['medical-history']
     const SmokingHistory = data['your-smoking-history']
+    console.log("SmokingHistory:",SmokingHistory)
     const Age = data["general-information"]["How old are you?"]
     let result =0
     //antibiotic

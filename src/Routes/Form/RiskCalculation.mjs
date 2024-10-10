@@ -27,7 +27,6 @@ export const RiskCalculation = async (req, res) => {
         if (form) {
             // If the form exists, return the form data
             //console.log(form.form_data)
-            console.log("form.form_data:",form.form_data)
             let dataObj;
             if (typeof form.form_data === 'string') {
                 dataObj = JSON.parse(form.form_data);
