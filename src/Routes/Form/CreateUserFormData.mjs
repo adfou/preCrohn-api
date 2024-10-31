@@ -64,6 +64,7 @@ export const CreateUserFormData = async (req, res) => {
             const newForm = await Form.create({
                 user_id,
                 form_data,
+                state:"0"
             });
         }
 
