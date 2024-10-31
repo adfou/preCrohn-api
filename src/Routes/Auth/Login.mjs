@@ -29,6 +29,7 @@ const loginUser = async (req, res) => {
         );
 
         // Return the token, user information, and form data (if exists)
+        
         res.status(200).json({
             message: 'Login successful',
             token,
@@ -36,7 +37,10 @@ const loginUser = async (req, res) => {
                 id: user.id,
                 email: user.email,
                 role: user.role,
+                state: user.state
+                
             },
+            state:form ? form.state : null,
             form: form ? form.form_data : {}, // Return form data if it exists, else null
         });
     } catch (error) {

@@ -4,7 +4,7 @@ import {Servings_per_Day} from "../../data/data.mjs"
 // Controller function to get form data by user_id
 export const RiskCalculation = async (req, res) => {
    
-    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    //const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     try {
         // Assuming the user_id is retrieved from the authenticated user (from token or session)

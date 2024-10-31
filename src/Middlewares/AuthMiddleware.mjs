@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 const authenticateJWT = (req, res, next) => {
     // Extract token from Authorization header
     const token = req.headers['authorization'];
-    
     //const token = authHeader && authHeader.split(' ')[1];
 
     if (token == null) return res.sendStatus(401); // Unauthorized if no token

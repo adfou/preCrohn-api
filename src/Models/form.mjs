@@ -20,23 +20,34 @@ export default (db, types) => {
         
         },
         form_type: {
+            //
             type: types.ENUM,
             values: [
-                '0', // General information
-                '1', // Your medical history
-                '2', // Your family history)
-                '3', // Your diet
-                '4',
-                '5',
-                '6',
-                '7',
-                '8',
-                '9', // Your physical activity
-                '10', // Your smoking history   
-                '11'  // CROHN’S DISEASE: KNOWLEDGE AND ATTITUDES SURVEY
+                '0', // intial state
+                '1', // waiting for 4 weeks 
+                '2', // waiting for 6 months
+                
             ],
             default:"0"
+        },
+        
+        submit_date: {
+            type: types.DATEONLY, // Use DATEONLY to store only the date
+            allowNull: false,
+            defaultValue: types.NOW // Automatically sets the current date as the default value
         }
+        ,
+        state:{
+                type: types.ENUM,
+                values: [
+                    '0', // open 
+                    '1', // close
+                    
+                ],
+                default:"0"
+            
+        }
+
     }, {
         timestamps: true,
         createdAt: true,

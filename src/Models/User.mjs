@@ -34,7 +34,7 @@ export default (db, types) => {
         role: {
             type: types.ENUM(['1', '2', '3']),  // ENUM expects an array of values
             defaultValue: '3',
-            comment: "1 -> admin, 2 -> user Group 1, 3 -> user Group 2"
+            comment: "1 -> admin, 2 -> Intervention, 3 -> Control"
         },
         activation: {
             type: types.BOOLEAN,
@@ -51,6 +51,17 @@ export default (db, types) => {
         biomarkers: {
             type: types.ENUM(['no', 'yes']),  // ENUM expects an array
             defaultValue: "no"
+        }
+        ,
+        state:{
+                type: types.ENUM,
+                values: [
+                    '0', // open 
+                    '1', // close
+                    
+                ],
+                defaultValue:"0"
+            
         }
     }, {
         timestamps: true,  // Automatically adds createdAt and updatedAt
