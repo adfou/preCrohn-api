@@ -1,5 +1,5 @@
 import { Form, User} from '../../Models/index.mjs'; // Adjust the path as needed
-import {SugareCalculation ,fruitCalculation ,AcitvityCalculation ,FiberCalculation ,RiskCalculationsFemal, RiskCalculationsMale} from "../../utils/index.mjs"
+import {SugareCalculation ,fruitCalculationServing,fruitCalculation ,AcitvityCalculation ,AcitvityCalculationIntermediate,FiberCalculation ,RiskCalculationsFemal, RiskCalculationsMale} from "../../utils/index.mjs"
 import {Servings_per_Day} from "../../data/data.mjs"
 // Controller function to get form data by user_id
 export const RiskCalculation = async (req, res) => {
@@ -43,8 +43,11 @@ export const RiskCalculation = async (req, res) => {
 
             //console.log(dataObj["general-information"])
             const AcitvityCalcul = AcitvityCalculation(dataObj?.["your-physical-activity"])
+            const acitvityCalculationIntermediate = AcitvityCalculationIntermediate(dataObj?.["your-physical-activity"])
             const SugarCalcul = SugareCalculation(dataObj)
             const FruitCalcul = fruitCalculation(dataObj['your-diet-2'],Servings_per_Day)
+            const FruitCalculationServing = fruitCalculationServing(dataObj['your-diet-2'],Servings_per_Day)
+            
             const FiberCalcul = FiberCalculation(dataObj)
             const Gender = dataObj["general-information"]['What is your sex assigned at birth?']
             console.log("===============")
@@ -64,9 +67,9 @@ export const RiskCalculation = async (req, res) => {
             }
             else{
                 console.log("================ femal ================")
-            Result = RiskCalculationsFemal(dataObj,AcitvityCalcul,FruitCalcul,SugarCalcul,FiberCalcul,user.biomarkers)
+            Result = RiskCalculationsFemal(dataObj,AcitvityCalcul,FruitCalcul,SugarCalcul,FiberCalcul,user.biomarkers,FruitCalculationServing)
         }
-            
+            Result['acitvity Calculation Intermediate'] = acitvityCalculationIntermediate
             //console.log("RiskClacul:",Result)
             return res.status(200).json(Result);
         } else {

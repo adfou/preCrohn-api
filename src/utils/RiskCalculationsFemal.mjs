@@ -11,7 +11,7 @@ const DoYouSmokeCigarettesFemal = {
 //medical-history #How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?
 const NSAIDsValueFemal={
     "0":1,
-    "1":1.68,
+    "1":1,
     "2":1.68,
 }
 const BirthControlPill={
@@ -27,27 +27,20 @@ const SugarFemale = (SugarCalculation) => SugarCalculation < 45 ? 1 : 1.41;
 
 const FiberFemale = (FiberCalculation) => FiberCalculation < 25 ? 1 : 0.63;
 
-const AntibioticCalculation = (qstn , old)=>{
-    if(qstn === "NO"){
-        return 1
+const AntibioticCalculation = (qstn, old) => {
+
+  
+    if (qstn === "NO") {
+      return 1;
+    } else {
+      // Check if "0–10 years old" exists in the old array
+      if (old.includes("0–10 years old")) {
+        return 2.75;
+      } else {
+        return 1;
+      }
     }
-    else{
-        //Have you ever taken birth control pills?
-        if(old === 0){
-            return 2,75
-        }
-        else{
-            return 1
-        }
-    }
-
-//
-//medical-history
-//Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)
-
-
-}
-
+  };
 
 //Were you breast-fed when you were a baby?
 const BreastFeeed = (Response) => Response === "1" ? 1 : 0.71;
@@ -124,7 +117,7 @@ function categorizeRisk(RR) {
     }
 }
 
-export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,SugarCalculation,FiberCalculation,biomarkers) => {
+export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,SugarCalculation,FiberCalculation,biomarkers,FruitCalculationServing) => {
     const MedicalHistory = data['medical-history']
     const SmokingHistory = data['your-smoking-history']
     const Age = data["general-information"]["How old are you?"]
@@ -132,8 +125,8 @@ export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,S
     let result =0
     let testData ={}
     //antibiotic
-    result += AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"])
-    
+    result += AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"],MedicalHistory["What age(s) did you take antibiotics? (Select all that apply.)"])
+
     result *= FiberFemale(FiberCalculation)
     result *= PhysicalactivityFemale(activityCalculation)
     result *= FruitFemale(FruitCalculation)
@@ -145,7 +138,7 @@ export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,S
     result *= Biomarkers(biomarkers)
     result *= BirthControlPill[MedicalHistory["Have you ever taken birth control pills?"]]
     testData={
-        AntibioticCalculation:MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"],
+        AntibioticCalculation:MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)",MedicalHistory["What age(s) did you take antibiotics? (Select all that apply.)"]],
         FiberFemale:FiberCalculation,
         FruitFemale:FruitFemale(FruitCalculation),
         SugarFemale:SugarFemale(SugarCalculation),
@@ -202,9 +195,10 @@ export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,S
         BreastFeeed:BreastFeeed(MedicalHistory['Were you breast-fed when you were a baby?']),
         PetsAtHome:PetsAtHome(MedicalHistory['When you were a child or young adult, did you have pets in your home? ']),
         NSAIDsValueFemal:NSAIDsValueFemal[MedicalHistory['How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?']],
-        AntibioticCalculation:AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"]),
+        AntibioticCalculation:AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"],MedicalHistory["What age(s) did you take antibiotics? (Select all that apply.)"]),
         CategorizeRisk:categorizeRisk(setpOne),
-        testData:testData
+        testData:testData,
+        "Fruit Serving":FruitCalculationServing
     }
 
     return FinalResult

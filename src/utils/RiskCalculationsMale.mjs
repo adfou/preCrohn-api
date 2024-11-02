@@ -11,7 +11,7 @@ const DoYouSmokeCigarettes = {
 //medical-history #How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?
 const NSAIDsValue={
     "0":1,
-    "1":1.68,
+    "1":1,
     "2":1.68,
 }
 
@@ -23,26 +23,20 @@ const Sugare = (SugarCalculation) => SugarCalculation < 45 ? 1 : 1.5;
 
 const Fibere = (FiberCalculation) => FiberCalculation < 25 ? 1 : 0.54;
 
-const AntibioticCalculation = (qstn , old)=>{
-    if(qstn === "NO"){
-        return 1
+const AntibioticCalculation = (qstn, old) => {
+
+  
+    if (qstn === "NO") {
+      return 1;
+    } else {
+      // Check if "0–10 years old" exists in the old array
+      if (old.includes("0–10 years old")) {
+        return 2.75;
+      } else {
+        return 1;
+      }
     }
-    else{
-        //Have you ever taken birth control pills?
-        if(old === 0){
-            return 2,75
-        }
-        else{
-            return 1
-        }
-    }
-
-//
-//medical-history
-//Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)
-
-
-}
+  };
 
 function categorizeRisk(RR) {
     if (RR < 0.25) {
@@ -127,7 +121,7 @@ export const RiskCalculationsMale =(data,activityCalculation,FruitCalculation,Su
     const Age = data["general-information"]["How old are you?"]
     let result =0
     //antibiotic
-    result *= AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"])
+    result *= AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"],MedicalHistory["What age(s) did you take antibiotics? (Select all that apply.)"])
     result *= Fibere(FiberCalculation)
     result *= Physicalactivitye(activityCalculation)
     result *= Fruite(FruitCalculation)
@@ -163,7 +157,7 @@ export const RiskCalculationsMale =(data,activityCalculation,FruitCalculation,Su
         BreastFeeed:BreastFeeed(MedicalHistory['Were you breast-fed when you were a baby?']),
         PetsAtHome:PetsAtHome(MedicalHistory['When you were a child or young adult, did you have pets in your home? ']),
         NSAIDsValueFemal:NSAIDsValue[MedicalHistory['How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?']],
-        AntibioticCalculation:AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"]),
+        AntibioticCalculation:AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"],MedicalHistory["What age(s) did you take antibiotics? (Select all that apply.)"]),
         CategorizeRisk:categorizeRisk(setpOne)
     }
 
