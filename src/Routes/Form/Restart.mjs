@@ -1,16 +1,14 @@
-import { Form } from '../../Models/index.mjs'; // Adjust the path as needed
+import { Form } from '../../Models/index.mjs';
 
 export const Restart = async (req, res) => {
     try {
-        // Assuming the user_id is retrieved from the authenticated user (from token or session)
-        const user_id = req.user.id;
+        const user_id = req.query.id; // Get the user ID from the query string
 
-        // Find all forms for the user, ordered by creation date (oldest first)
+        // Find all forms for the user
         const forms = await Form.findAll({
             where: {
                 user_id,
             },
-            order: [['createdAt', 'ASC']],
         });
 
         // If no forms found, return an error
@@ -21,18 +19,14 @@ export const Restart = async (req, res) => {
             });
         }
 
-        // Keep the oldest form and delete the rest
-        const oldestForm = forms[0];
-        const formsToDelete = forms.slice(1);
-
-        for (const form of formsToDelete) {
+        // Delete each form in the `forms` array
+        for (const form of forms) {
             await form.destroy();
         }
 
         return res.status(200).json({
-            message: 'All forms except the oldest one have been deleted successfully.',
+            message: 'Restart successfully.',
             success: true,
-            remainingForm: oldestForm,
         });
     } catch (error) {
         console.error('Error deleting forms:', error);

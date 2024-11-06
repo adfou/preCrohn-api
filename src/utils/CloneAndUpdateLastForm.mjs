@@ -1,4 +1,4 @@
-import { Form } from "../Models/index.mjs"; // Adjust the path as needed
+import { Form, User } from "../Models/index.mjs"; // Adjust the path as needed
 
 export const CloneAndUpdateLastForm = async (userId) => {
     try {
@@ -14,7 +14,7 @@ export const CloneAndUpdateLastForm = async (userId) => {
         if (!lastForm) {
             console.error("No previous form found for this user.");
             return {
-                message: 'you dont finish the last foorm',
+                message: 'You haven\'t completed the last form',
                 success: false,
             };
         }
@@ -49,19 +49,17 @@ export const CloneAndUpdateLastForm = async (userId) => {
         ];
         keysToRemove.forEach(key => delete formData[key]);
 
-        // Remove "How old are you?" from "General information" if it exists
-        if (formData['general-information'] && typeof formData['general-information']  === 'object') {
-            
+        // Remove specific fields within sections
+        if (formData['general-information'] && typeof formData['general-information'] === 'object') {
             delete formData['general-information']['How old are you?'];
         }
-        if (formData['medical-history'] && typeof formData['medical-history']  === 'object') {
-            
+        if (formData['medical-history'] && typeof formData['medical-history'] === 'object') {
             delete formData['medical-history']['Have you ever taken birth control pills?'];
             delete formData['medical-history']['Have you ever been diagnosed with Crohn’s disease, ulcerative colitis, or inflammatory bowel disease (IBD)-unclassified?'];
             delete formData['medical-history']['How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?'];
         }
-    
-        // Create a new form by copying the content from the old one
+
+        // Create a new form by copying the content from the last form
         const newForm = await Form.create({
             user_id: userId,
             form_data: formData,
@@ -69,10 +67,19 @@ export const CloneAndUpdateLastForm = async (userId) => {
             state: "0"
         });
 
+   
+        const updatedUser = await User.update(
+            { state: "0", progression: 16 },
+            { where: { id: userId }, returning: true, plain: true }
+        );
+
+        console.log("User details after update:", updatedUser[1].dataValues);
+
         return {
-            message: 'New form created successfully.',
+            message: 'Next phase completed successfully',
             success: true,
             form: newForm,
+            user: user, // Return user details if needed
         };
     } catch (error) {
         console.error("Error cloning and updating form:", error);

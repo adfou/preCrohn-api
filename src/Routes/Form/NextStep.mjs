@@ -2,8 +2,11 @@ import { Form, User } from '../../Models/index.mjs'; // Adjust the path as neede
 import { getUserFormCount,CloneAndUpdateLastForm } from '../../utils/index.mjs';
 
 export const NextStep = async (req, res) => {
-  const userId = req.user.id; // Get the user ID from request parameters
+  //const userId = req.user.id; // Get the user ID from request parameters
+  const userId = req.query.id; // Get the user ID from the query string
+  //console.log("User ID from query:", userId);
 
+  
   
   
   try {
@@ -24,7 +27,7 @@ export const NextStep = async (req, res) => {
       });
 
     const phase = await getUserFormCount(userId, user.state, user.role);
- 
+    console.log("phase:",phase)
     let Result = await Form.findOne({
         where: {
           user_id: userId,
@@ -39,6 +42,7 @@ export const NextStep = async (req, res) => {
           Result = await CloneAndUpdateLastForm(userId);
           break;
         case 2:
+          console.log('Role 2, Phase 2');
           Result = await CloneAndUpdateLastForm(userId);
           break;
         case 3:
@@ -61,7 +65,7 @@ export const NextStep = async (req, res) => {
       }
     }
     //console.log('Result:',Result)
-
+    console.log("== to end ==")
     return res.status(201).json({
         Result:Result,
         phase: phase,
