@@ -12,7 +12,7 @@ const Form = formModel(DB, Sequelize);
 User.hasMany(Form, { foreignKey: 'user_id', as: 'forms' });
 // Form belongs to a User
 Form.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
-DB.sync({ alter: true ,force: true}) //
+DB.sync({ alter: false ,force: false}) //
     .then(() => {
         console.log('Tables are updated without being deleted.');
     })
