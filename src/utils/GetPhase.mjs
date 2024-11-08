@@ -1,32 +1,49 @@
 import { Form } from "../Models/index.mjs"; //'../../Models/index.mjs'; // Adjust the path as needed
 
-export const getUserFormCount = async (userId, state, role) => {
+export const GetPhaseStr = async (FormCount, state, role) => {
     try {
+        if(role===1){
+            return '_'
+        }
         // Count the number of forms associated with the user_id
-        const formCount = await Form.count({
-            where: {
-                user_id: userId,
-            },
-        });
-
-        if (role === "2") {
-            console.log("formCount",formCount)
-            if ( formCount === 1) return 1;
-            if (formCount === 2) return 2;
-            if (formCount === 3) return 3;
-            return -1;
+        let indicator = FormCount
+        if(role ==="1"){ return "_"}
+        if(FormCount === -1){
+            if(role === "2"){
+                return "Phase Three"}
+            else{
+            return "Phase Two "}
         }
+        
+  
+            //Intervention
+            switch (indicator){
 
-        if (role === "3") {
+                case 0:
+                   
+                    return "Baseline"
+                case 1:
+                    if(state === "1"){
+                        return "Baseline"}
+                    else{
+                    return "Phase One "}
+                case 2:
+                        return "Phase One"
+                  
+                case 3:
+                    if(role==='3'){
+                        return "Phase Two"}
+                    
+                    else{  
+                return "Phase Three "}
+                 case 3:
+                   
+                    return "Phase Three"
+            }
             
-            if (formCount === 1) return 1;
-            if (formCount === 2) return 2;
-            return -1;
-        }
-       
-        return -2;
+      
     } catch (error) {
         console.error("Error fetching form count:", error);
-        return 0;
+        return "Baseline";
     }
 };

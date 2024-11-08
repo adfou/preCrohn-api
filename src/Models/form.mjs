@@ -32,11 +32,12 @@ export default (db, types) => {
         },
         
         submit_date: {
-            type: types.DATEONLY, // Use DATEONLY to store only the date
-            allowNull: false,
-            defaultValue: types.NOW // Automatically sets the current date as the default value
-        }
-        ,
+            type: types.DATEONLY,
+            allowNull: true, // Allows NULL value
+            defaultValue: null // Ensures no default date is set
+        },
+
+        
         state:{
                 type: types.ENUM,
                 values: [
@@ -53,6 +54,6 @@ export default (db, types) => {
         createdAt: true,
         updatedAt: true,
         deletedAt: true,
-        paranoid: true
+        paranoid: false
     });
 };

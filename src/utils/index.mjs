@@ -7,5 +7,7 @@ export {fruitCalculationServing} from "./FruitClaculation.mjs";
 
 export {SugareCalculation} from "./SugarCalculation.mjs";
 export {RiskCalculationsMale} from "./RiskCalculationsMale.mjs";
-export {getUserFormCount} from "./GetPhase.mjs"
+export {getUserFormCount} from "./GetUserFormCount.mjs"
+export {GetPhaseStr} from "./GetPhase.mjs"
 export {CloneAndUpdateLastForm} from "./CloneAndUpdateLastForm.mjs"
+export {calculateProgress} from "./calculateProgress.mjs"

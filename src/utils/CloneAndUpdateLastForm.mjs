@@ -73,13 +73,11 @@ export const CloneAndUpdateLastForm = async (userId) => {
             { where: { id: userId }, returning: true, plain: true }
         );
 
-        console.log("User details after update:", updatedUser[1].dataValues);
 
         return {
             message: 'Next phase completed successfully',
             success: true,
             form: newForm,
-            user: user, // Return user details if needed
         };
     } catch (error) {
         console.error("Error cloning and updating form:", error);

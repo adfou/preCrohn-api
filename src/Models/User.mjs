@@ -51,6 +51,23 @@ export default (db, types) => {
         biomarkers: {
             type: types.ENUM(['no', 'yes']),  // ENUM expects an array
             defaultValue: "no"
+        },
+        phase: {
+            type: types.INTEGER,
+            defaultValue: 0,
+            validate: {
+                min: 0,
+                max: 3
+            },
+            set(value) {
+                if (value < 0) {
+                    this.setDataValue('phase', 0); // Set to 0 if the value is less than 0
+                } else if (value > 3) {
+                    this.setDataValue('phase', 3); // Set to 3 if the value is greater than 3
+                } else {
+                    this.setDataValue('phase', value); // Set the value if it's within the range
+                }
+            }
         }
         ,
         state:{

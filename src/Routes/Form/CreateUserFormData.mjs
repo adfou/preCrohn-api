@@ -1,14 +1,15 @@
 import { Form,User } from '../../Models/index.mjs'; // Adjust the path as needed
+import {calculateProgress} from "../../utils/index.mjs"
 
 export const CreateUserFormData = async (req, res) => {
     const { form_data } = req.body; // Destructure form_type from the request body
 
-   
+    
 
     try {
         // Assuming the user_id is retrieved from the authenticated user (from token or session)
         const user_id = req.user.id;
-
+        let prog = calculateProgress(form_data)
      
 
         const existingForm = await Form.findOne({
@@ -19,20 +20,28 @@ export const CreateUserFormData = async (req, res) => {
             ,
             order: [['createdAt', 'DESC']],
         }); 
-     
+        const user = await User.findOne({
+            where: {
+                id:user_id,
+            }
+        }); 
+        user.update({ 
+            progression : prog,
+        });
         if (existingForm) {
             // If the form exists, update the form_data
-            await existingForm.update({ form_data });
-            console.log("=== befor test final")
+            
+            console.log("pregression : ",prog)
+            await existingForm.update({ 
+                form_data,
+             });
+             
+            console.log("=============befor test final========")
             if(Object.keys(existingForm.form_data).length === 12){
                 //finish 
-                const user = await User.findOne({
-                    where: {
-                        id:user_id,
-                    }
-                }); 
+                
                 user.update({ 
-                    state: "1" ,
+                    state: "1" 
                 });
 
                 await existingForm.update({ 
@@ -43,6 +52,7 @@ export const CreateUserFormData = async (req, res) => {
                     state: "1" ,
                 });
             }
+          
             
             return res.status(200).json({
                 message: 'Form data updated successfully.',
@@ -64,8 +74,10 @@ export const CreateUserFormData = async (req, res) => {
             const newForm = await Form.create({
                 user_id,
                 form_data,
-                state:"0"
+                state:"0",
+                
             });
+           
         }
 
             

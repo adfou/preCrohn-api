@@ -10,9 +10,13 @@ export const Restart = async (req, res) => {
                 user_id,
             },
         });
+
+        // Find the user by user_id
         const user = await User.findOne({ where: { id: user_id } });
         if (user) {
             user.state = '0';
+            user.progression = 0
+            user.phase = 0
             await user.save();
         } else {
             return res.status(404).json({
@@ -24,18 +28,17 @@ export const Restart = async (req, res) => {
         // If no forms found, return an error
         if (!forms || forms.length === 0) {
             return res.status(404).json({
-                message: 'No forms found for this user.',
+                message: 'User already in Baseline.',
                 success: false,
             });
         }
 
         // Delete each form in the `forms` array
         for (const form of forms) {
-            await form.destroy();
+            await form.destroy({ force: true }); // Permanently delete each form
         }
 
-        // Update the user's state to 0
-       
+      
         return res.status(200).json({
             message: 'Restart completed successfully.',
             success: true,
