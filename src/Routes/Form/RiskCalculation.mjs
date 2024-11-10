@@ -6,7 +6,7 @@ export const RiskCalculation = async (req, res) => {
    
     //const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-    try {
+    
         // Assuming the user_id is retrieved from the authenticated user (from token or session)
       
         const user_id = req.user.id;
@@ -79,12 +79,5 @@ export const RiskCalculation = async (req, res) => {
                 message: 'No form data found for this user.'
             });
         }
-    } catch (error) {
-        console.error('Error fetching form data:', error);
-        return res.status(500).json({
-            success: false,
-            message: 'An error occurred while fetching form data.',
-            error: error.message
-        });
-    }
+   
 };

@@ -1,14 +1,16 @@
 import { User, Form } from '../../Models/index.mjs';
 
 export const getParticipantProfile = async (req, res) => {
+    console.log("dkhal!")
     try {
         const userId = req.user.id;
         const user = await User.findByPk(userId, {
-            attributes: ['role', 'state', 'firstName','progression','phase'],
+            attributes: ['role', 'state', 'firstName','progression','phase','submit_date'],
             include: {
                 model: Form,
                 as: 'forms',
-                attributes: ['form_data', 'submit_date', 'state'],
+                //change
+                attributes: ['form_data', 'state'],
             },
         });
 
@@ -19,12 +21,13 @@ export const getParticipantProfile = async (req, res) => {
         const userObject = user.toJSON();
         const forms = userObject.forms.map(form => {
            
-         
+      
 
             return {
                 completionPercentage:user.progression,
                 state: form.state === '1' ? 'close' : 'open',
-                submit_date: form.submit_date,
+                //change
+                submit_date: user.submit_date,
                 phase:user.phase,
             };
         });
@@ -37,6 +40,7 @@ export const getParticipantProfile = async (req, res) => {
             completionPercentage:user.progression,
         });
     } catch (error) {
+        console.log("error",error)
         res.status(500).json({ error: error.message });
     }
 };

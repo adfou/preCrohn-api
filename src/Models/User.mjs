@@ -20,7 +20,7 @@ export default (db, types) => {
            
         },
         email: {
-            type: types.STRING(100),
+            type: types.STRING(64),
             allowNull: false,
             unique: true,  // Email should be unique as well
             validate: { 
@@ -79,7 +79,12 @@ export default (db, types) => {
                 ],
                 defaultValue:"0"
             
-        }
+        },
+        submit_date: {
+            type: types.DATEONLY,
+            allowNull: true, // Allows NULL value
+            defaultValue: null // Ensures no default date is set
+        },
     }, {
         timestamps: true,  // Automatically adds createdAt and updatedAt
         paranoid: true,     // Enables soft deletes (deletedAt)

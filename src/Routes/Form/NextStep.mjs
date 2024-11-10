@@ -41,7 +41,7 @@ export const NextStep = async (req, res) => {
       console.log("condition",(phase === 1 && user.role === '3') )
     
 
-    if((phase === 1 && user.role === '3') || (user.role === '2' && phase === 2)){
+    if((phase === 2 && user.role === '3') || (user.role === '2' && phase === 2)){
       return res.status(500).json({
         message: 'The survey has already been completed.',
         success: false,

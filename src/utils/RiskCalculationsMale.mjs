@@ -24,9 +24,8 @@ const Sugare = (SugarCalculation) => SugarCalculation < 45 ? 1 : 1.5;
 const Fibere = (FiberCalculation) => FiberCalculation < 25 ? 1 : 0.54;
 
 const AntibioticCalculation = (qstn, old) => {
-
   
-    if (qstn === "NO") {
+    if (qstn === "No") {
       return 1;
     } else {
       // Check if "0–10 years old" exists in the old array

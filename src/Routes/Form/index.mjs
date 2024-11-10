@@ -5,10 +5,13 @@ import {RiskCalculation} from "./RiskCalculation.mjs"
 import {TestChangeState} from "./TestChangeState.mjs"
 import {NextStep} from "./NextStep.mjs"
 import {Restart} from "./Restart.mjs"
+import{FinishForm} from "./FinishForm.mjs"
 
 const router = Router();
 
 router.post('/form',authenticateJWT,CreateUserFormData);
+router.post('/form/finish',authenticateJWT,FinishForm);
+
 router.get("/risk",authenticateJWT,RiskCalculation)
 router.get("/test-change-state",authenticateJWT,TestChangeState)
 router.get("/next-step",authenticateJWT,NextStep)

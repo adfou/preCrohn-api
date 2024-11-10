@@ -31,12 +31,6 @@ export default (db, types) => {
             default:"0"
         },
         
-        submit_date: {
-            type: types.DATEONLY,
-            allowNull: true, // Allows NULL value
-            defaultValue: null // Ensures no default date is set
-        },
-
         
         state:{
                 type: types.ENUM,
