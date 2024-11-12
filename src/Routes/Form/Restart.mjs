@@ -17,6 +17,7 @@ export const Restart = async (req, res) => {
             user.state = '0';
             user.progression = 0
             user.phase = 0
+            user.submit_date = null
             await user.save();
         } else {
             return res.status(404).json({
