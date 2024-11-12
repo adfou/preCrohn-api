@@ -138,7 +138,7 @@ export const RiskCalculationsMale =(data,activityCalculation,FruitCalculation,Su
     const StepTwo = getFDRValueSetp2(Age,FamilyHistory)
     
     //const FinalResult = setpOne*StepTwo
-
+    console.log("are you sure ")
     const FinalResult = {
         FinalResult:setpOne*StepTwo,
         FinalRsultRound:Math.round(setpOne*StepTwo),
@@ -157,7 +157,8 @@ export const RiskCalculationsMale =(data,activityCalculation,FruitCalculation,Su
         PetsAtHome:PetsAtHome(MedicalHistory['When you were a child or young adult, did you have pets in your home? ']),
         NSAIDsValueFemal:NSAIDsValue[MedicalHistory['How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?']],
         AntibioticCalculation:AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"],MedicalHistory["What age(s) did you take antibiotics? (Select all that apply.)"]),
-        CategorizeRisk:categorizeRisk(setpOne)
+        CategorizeRisk:categorizeRisk(setpOne),
+        FruitCalculation:FruitCalculation
     }
 
     return FinalResult 

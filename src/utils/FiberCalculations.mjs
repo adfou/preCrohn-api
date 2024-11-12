@@ -5,7 +5,7 @@ import {FiberCalcuationSweets,
 
 export const FiberCalculation = (data)=>{
     let BervergesData= data?.["your-diet-6"]
-
+    let FiberData = {}
 
     let SweetssData=data?.["your-diet-7"]
     let BreadsData=data?.["your-diet-5"]
@@ -26,6 +26,7 @@ export const FiberCalculation = (data)=>{
     for (let key in FiberCalcuationVegetables) {
         if (Vegetables.hasOwnProperty(key)) {
           result += FiberCalcuationVegetables[key] * Vegetables[key];
+          FiberData[key]=FiberCalcuationVegetables[key] * Vegetables[key];
         }
       }
       console.log("FiberCalcuationVegetables:",test)
@@ -35,6 +36,7 @@ export const FiberCalculation = (data)=>{
         if (SweetssData.hasOwnProperty(key)) {
             
           result += FiberCalcuationSweets[key] * SweetssData[key];
+          FiberData[key]=FiberCalcuationSweets[key] * SweetssData[key];
           
         }
       }
@@ -43,7 +45,7 @@ export const FiberCalculation = (data)=>{
     for (let key in FiberCalcuationBreads) {
         if (BreadsData.hasOwnProperty(key)) {
           result += FiberCalcuationBreads[key] * BreadsData[key];
-          test += FiberCalcuationBreads[key] * BreadsData[key];
+          FiberData[key]=FiberCalcuationBreads[key] * BreadsData[key];
           
         }
       }
@@ -52,10 +54,10 @@ export const FiberCalculation = (data)=>{
       for (let key in FiberCalcuationFruit) {
         if (FruitData.hasOwnProperty(key)) {
           result += FiberCalcuationFruit[key] * FruitData[key];
-         
+          FiberData[key]=FiberCalcuationFruit[key] * FruitData[key];
           
         }
       }
-    return result;
+    return {FiberCalcul:result,FiberData};
     
 }

@@ -197,7 +197,6 @@ export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,S
         AntibioticCalculation:AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"],MedicalHistory["What age(s) did you take antibiotics? (Select all that apply.)"]),
         CategorizeRisk:categorizeRisk(setpOne),
         testData:testData,
-        "Fruit Serving":FruitCalculationServing
     }
 
     return FinalResult

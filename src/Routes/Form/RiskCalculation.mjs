@@ -44,11 +44,11 @@ export const RiskCalculation = async (req, res) => {
             //console.log(dataObj["general-information"])
             const AcitvityCalcul = AcitvityCalculation(dataObj?.["your-physical-activity"])
             const acitvityCalculationIntermediate = AcitvityCalculationIntermediate(dataObj?.["your-physical-activity"])
-            const SugarCalcul = SugareCalculation(dataObj)
-            const FruitCalcul = fruitCalculation(dataObj['your-diet-2'],Servings_per_Day)
-            const FruitCalculationServing = fruitCalculationServing(dataObj['your-diet-2'],Servings_per_Day)
+            const { SugarCalcul, SugareCalculationData } = SugareCalculation(dataObj)
+            const {FruitCalcul,FruitData} = fruitCalculation(dataObj['your-diet-2'],Servings_per_Day)
+            const {FruitCalculationServing,FruitDataServingData} = fruitCalculationServing(dataObj['your-diet-2'],Servings_per_Day)
             
-            const FiberCalcul = FiberCalculation(dataObj)
+            const {FiberCalcul,FiberData} = FiberCalculation(dataObj)
             const Gender = dataObj["general-information"]['What is your sex assigned at birth?']
             console.log("===============")
             console.log("AcitvityCalcul",AcitvityCalcul)
@@ -70,6 +70,11 @@ export const RiskCalculation = async (req, res) => {
             Result = RiskCalculationsFemal(dataObj,AcitvityCalcul,FruitCalcul,SugarCalcul,FiberCalcul,user.biomarkers,FruitCalculationServing)
         }
             Result['acitvity Calculation Intermediate'] = acitvityCalculationIntermediate
+            //Result['FruitData'] = FruitData
+            Result['SugareCalculationData']=SugareCalculationData
+            Result['FruitDataServingData']=FruitDataServingData
+            Result['FiberData'] = FiberData
+           
             //console.log("RiskClacul:",Result)
             return res.status(200).json(Result);
         } else {
