@@ -22,7 +22,8 @@ const httpServer = createServer(app);
 const whitelist = [
     'http://localhost:3000',    
     'http://localhost:3001',
-    'https://precrohn-production.up.railway.app'
+    'https://precrohn-production.up.railway.app',
+    'https://precrohns.mgh.harvard.edu/'
 ];
 
 const corsOptionsDelegate = (req, callback) => {
