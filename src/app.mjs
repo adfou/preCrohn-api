@@ -22,6 +22,7 @@ const httpServer = createServer(app);
 const whitelist = [
     'http://localhost:3000',    
     'http://localhost:3001',
+    'http://localhost:5173',
     'https://precrohn-production.up.railway.app',
     'https://precrohns.mgh.harvard.edu/'
 ];

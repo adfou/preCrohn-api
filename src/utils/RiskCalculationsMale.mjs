@@ -55,7 +55,7 @@ function categorizeRisk(RR) {
 
 
 //Were you breast-fed when you were a baby?
-const BreastFeeed = (Response) => Response === "1" ? 1 : 0.71;
+const BreastFeeed = (Response) => Response === "0" ? 1 : 0.71;
 
 
 //When you were a child or young adult, did you have pets in your home? 
@@ -116,9 +116,8 @@ export const RiskCalculationsMale =(data,activityCalculation,FruitCalculation,Su
     const MedicalHistory = data['medical-history']
     const SmokingHistory = data['your-smoking-history']
     const FamilyHistory = data['family-history']
-    console.log("SmokingHistory:",SmokingHistory)
     const Age = data["general-information"]["How old are you?"]
-    let result =0
+    let result =1
     //antibiotic
     result *= AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"],MedicalHistory["What age(s) did you take antibiotics? (Select all that apply.)"])
     result *= Fibere(FiberCalculation)
@@ -138,27 +137,31 @@ export const RiskCalculationsMale =(data,activityCalculation,FruitCalculation,Su
     const StepTwo = getFDRValueSetp2(Age,FamilyHistory)
     
     //const FinalResult = setpOne*StepTwo
-    console.log("are you sure ")
+    const resultG48 = {
+        "Smoking Status":DoYouSmokeCigarettes[SmokingHistory['Do you smoke cigarettes?']],
+        "Non-aspirin NSAID Use":NSAIDsValue[MedicalHistory['How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?']],
+        "Physical activity (MET - hrs/wk)":Physicalactivitye(activityCalculation),
+        "Fruit (servings/day)":Fruite(FruitCalculation),
+        "Added sugar (grams/day)":Sugare(SugarCalculation),
+        "Fiber (grams/day)":Fibere(FiberCalculation),
+        "Antibiotic exposure as a child (<10 yrs)":AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"],MedicalHistory["What age(s) did you take antibiotics? (Select all that apply.)"]),
+        "Breast fed as infant?":BreastFeeed(MedicalHistory['Were you breast-fed when you were a baby?']),
+        "Pet in home growing up?":PetsAtHome(MedicalHistory['When you were a child or young adult, did you have pets in your home? ']),
+        "≥ 2+ biomarkers?":Biomarkers(biomarkers),
+    }
+        
+    console.log("breast feed:",MedicalHistory['Were you breast-fed when you were a baby?'])
+    
     const FinalResult = {
         FinalResult:setpOne*StepTwo,
         FinalRsultRound:Math.round(setpOne*StepTwo),
-        RR:setpOne,
-        StepTwo:StepTwo,
-        TestCase:result,
-
-        SugarCalculation:Sugare(SugarCalculation),
-        Fruit:Fruite(FruitCalculation),
-        Physicalactivity:Physicalactivitye(activityCalculation),
-        FiberFemale:Fibere(FiberCalculation),
-        //BirthControlPill:BirthControlPill[MedicalHistory["Have you ever taken birth control pills?"]],
-        Biomarkers:Biomarkers(biomarkers),
-        DoYouSmokeCigarettesFemal:DoYouSmokeCigarettes[SmokingHistory['Do you smoke cigarettes?']],
-        BreastFeeed:BreastFeeed(MedicalHistory['Were you breast-fed when you were a baby?']),
-        PetsAtHome:PetsAtHome(MedicalHistory['When you were a child or young adult, did you have pets in your home? ']),
-        NSAIDsValueFemal:NSAIDsValue[MedicalHistory['How often do you use non-steroidal anti-inflammatory drugs (NSAIDs), such as Advil, Motrin, Aleve, ibuprofen, or naproxen?']],
-        AntibioticCalculation:AntibioticCalculation(MedicalHistory["Have you ever taken antibiotics? (Antibiotics are medicines used to treat infections like urinary tract infections, pneumonia, diverticulitis, strep throat, ear or sinus infection, and some sexually transmitted infections. They include medicines like amoxicillin, Augmentin, azithromycin or 'Z-pack,' nitrofurantoin or Macrobid, or ciprofloxacin.)"],MedicalHistory["What age(s) did you take antibiotics? (Select all that apply.)"]),
+        "Step 1":setpOne,
+        "Step 2":StepTwo,
+        "Step 3":setpOne*StepTwo,
+        "G48":result,
         CategorizeRisk:categorizeRisk(setpOne),
-        FruitCalculation:FruitCalculation
+        "Test case results":resultG48
+        
     }
 
     return FinalResult 

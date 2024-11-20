@@ -29,7 +29,6 @@ export const FiberCalculation = (data)=>{
           FiberData[key]=FiberCalcuationVegetables[key] * Vegetables[key];
         }
       }
-      console.log("FiberCalcuationVegetables:",test)
 
       //Sweetss
     for (let key in FiberCalcuationSweets) {

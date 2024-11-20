@@ -69,12 +69,14 @@ export const RiskCalculation = async (req, res) => {
                 console.log("================ femal ================")
             Result = RiskCalculationsFemal(dataObj,AcitvityCalcul,FruitCalcul,SugarCalcul,FiberCalcul,user.biomarkers,FruitCalculationServing)
         }
-            Result['acitvity Calculation Intermediate'] = acitvityCalculationIntermediate
-            //Result['FruitData'] = FruitData
-            Result['SugareCalculationData']=SugareCalculationData
-            Result['FruitDataServingData']=FruitDataServingData
-            Result['FiberData'] = FiberData
            
+            
+            Result['Data Calculaton:'] = {
+                "Physical activity (MET - hrs/wk)":AcitvityCalcul,
+                "Fruit (servings/day)" :FruitDataServingData,
+                "Added sugar (grams/day)":SugareCalculationData,
+                "Fiber (grams/day)":FiberData,
+            }
             //console.log("RiskClacul:",Result)
             return res.status(200).json(Result);
         } else {
