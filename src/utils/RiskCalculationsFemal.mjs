@@ -155,12 +155,13 @@ export const RiskCalculationsFemal =(data,activityCalculation,FruitCalculation,S
     const FinalResult = {
         FinalResult:setpOne*StepTwo,
         FinalRsultRound:Math.round(setpOne*StepTwo),
-        "Step 1":setpOne,
+        "Step 1 (RR)":setpOne,
         "Step 2":StepTwo,
-        "Step 3":setpOne*StepTwo,
+        "Step 3 (RLR)":setpOne*StepTwo,
         "G48":result,
         CategorizeRisk:categorizeRisk(setpOne),
-        "Test case results":resultG48
+        "Test case results":resultG48,
+        "Denominator":2.375
     }
 
     return FinalResult

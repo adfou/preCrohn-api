@@ -50,14 +50,7 @@ export const RiskCalculation = async (req, res) => {
             
             const {FiberCalcul,FiberData} = FiberCalculation(dataObj)
             const Gender = dataObj["general-information"]['What is your sex assigned at birth?']
-            console.log("===============")
-            console.log("AcitvityCalcul",AcitvityCalcul)
-            console.log("SugarCalcul",SugarCalcul)
-            console.log("FruitCalcul",FruitCalcul)
-            console.log("FiberCalcul",FiberCalcul)
-            console.log("bio :",user.biomarkers)
-            //console.log("user:",user)
-            console.log("===============")
+          
             let Result = {}
             if(Gender ==="0"){
                 console.log("================ male ================")

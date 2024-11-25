@@ -38,6 +38,7 @@ const AntibioticCalculation = (qstn, old) => {
   };
 
 function categorizeRisk(RR) {
+    console.log("type of ",typeof RR)
     if (RR < 0.25) {
         return "VERY LOW";
     } else if (RR >= 0.25 && RR < 0.75) {
@@ -155,12 +156,14 @@ export const RiskCalculationsMale =(data,activityCalculation,FruitCalculation,Su
     const FinalResult = {
         FinalResult:setpOne*StepTwo,
         FinalRsultRound:Math.round(setpOne*StepTwo),
-        "Step 1":setpOne,
+        "Step 1 (RR)":setpOne,
         "Step 2":StepTwo,
-        "Step 3":setpOne*StepTwo,
+        "Step 3 (RLR)":setpOne*StepTwo,
         "G48":result,
         CategorizeRisk:categorizeRisk(setpOne),
-        "Test case results":resultG48
+        "Test case results":resultG48,
+        "Denominator":1.988,
+        "sex":"male"
         
     }
 
